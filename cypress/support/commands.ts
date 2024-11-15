@@ -35,3 +35,15 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add('login', (account, password) => {
+    // Should implement login as api but for now we will use UI
+    cy.session('login', () => {
+        cy.visit('/web/index.php/auth/login')
+        cy.get('input[name="username"]').focus().type(account)
+        cy.get('input[name="password"]').focus().type(password)
+        cy.get('button[type="submit"]').click().then(() => {
+            cy.get('[class="oxd-userdropdown-name"]').should('exist'); // Assert login successfully
+          })
+    })
+})
